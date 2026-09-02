@@ -1,0 +1,121 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Computing &amp; De-Risking — Kronos Fusion Energy</title>
+<meta name="description" content="How Kronos re-ran its fusion physics from first principles: 164 design gates on ~69 established scientific codes, anchored in gyrokinetics and dimensionless parameters, with an AI/ML and quantum methods layer alongside — not as the source of the physics.">
+<meta name="keywords" content="gyrokinetics, CGYRO, negative triangularity, first-principles fusion, OpenMC neutronics, ASCOT5, dimensionless parameters, de-risking, spherical tokamak, tandem mirror, Kronos Fusion Energy">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<meta name="author" content="Kronos Fusion Energy"><meta name="copyright" content="© 2026 Kronos Fusion Energy. All rights reserved.">
+<link rel="canonical" href="https://kronosfusionenergy.com/computing">
+<meta property="og:title" content="Computing &amp; De-Risking — Kronos Fusion Energy"><meta property="og:type" content="website">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Computing & De-Risking — how Kronos re-ran the physics from first principles","about":["gyrokinetics","first-principles fusion simulation","de-risking"],"author":{"@type":"Organization","name":"Kronos Fusion Energy"},"dateModified":"2026-08-30","url":"https://kronosfusionenergy.com/computing"}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#1B2531;--panel:#151d27;--band:#1f2a37;--line:#2b3947;--gold:#D4AD5C;--blue:#5ea0c0;--ink:#e7edf3;--mut:#8fa0b8;--green:#7bc47f;--amber:#d9a441}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Space Grotesk',system-ui,sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:14px 20px 90px}
+.kick{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.2em;color:var(--gold)}
+h1{font-size:40px;line-height:1.1;margin:.25em 0 .2em;letter-spacing:-.01em}
+.sub{color:var(--mut);max-width:76ch;line-height:1.65;font-size:16px}
+.hero{border-bottom:1px solid var(--line);padding:26px 0 30px;margin-bottom:8px}
+.hero-fig{margin:0 0 30px}
+.hero-fig img{width:100%;height:auto;max-height:440px;object-fit:cover;object-position:center 42%;display:block;border-radius:14px;border:1px solid var(--line)}
+.hero-fig figcaption{margin-top:9px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.05em;color:var(--mut)}
+.hero-fig figcaption b{color:var(--gold);font-weight:400}
+.n{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.16em;color:var(--gold)}
+h2{font-size:25px;margin:.2em 0 .3em}
+section.blk{padding:34px 0;border-bottom:1px solid var(--line)}
+p{color:#c6d0dc;line-height:1.7;font-size:15px;max-width:82ch}
+.lead{color:var(--ink);font-size:16px}
+.pill{display:inline-block;padding:3px 11px;border-radius:20px;font-family:'Space Mono',monospace;font-size:11px}
+.pill.g{background:rgba(123,196,127,.16);color:var(--green)}.pill.gold{background:rgba(212,173,92,.16);color:var(--gold)}.pill.a{background:rgba(217,164,65,.16);color:var(--amber)}
+.stats{display:flex;flex-wrap:wrap;gap:14px;margin:18px 0 4px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 18px;min-width:130px}
+.stat b{display:block;font-size:26px;color:var(--gold);font-family:'Space Grotesk'}
+.stat span{font-size:12px;color:var(--mut)}
+.brightline{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:12px;padding:20px 24px;margin-top:10px}
+.brightline strong{color:var(--gold)}
+table.score{width:100%;border-collapse:collapse;margin-top:16px;font-size:13.5px}
+table.score th{text-align:left;padding:10px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);border-bottom:1px solid var(--line)}
+table.score td{padding:11px 10px;border-bottom:1px solid #16202b;color:#cdd7e2;vertical-align:top}
+table.score tr:nth-child(even) td{background:var(--band)}
+table.score td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+.mono{font-family:'Space Mono',monospace}
+.op{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0}
+.op div{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.op b{color:var(--gold);font-size:18px;display:block;font-family:'Space Mono',monospace}.op span{font-size:12px;color:var(--mut)}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+.btn{display:inline-block;text-decoration:none;font:600 14px 'Space Grotesk';padding:11px 16px;border-radius:8px;border:1px solid var(--line);color:var(--gold)}
+.btn.pri{background:#7a1420;color:#fff;border-color:#7a1420}
+.links a{color:var(--gold);text-decoration:none}.links li{margin:8px 0;color:#c6d0dc}
+footer{margin-top:40px;color:#6b7f93;font-size:12px;font-style:italic;padding-top:16px}
+em{color:var(--gold);font-style:normal}
+</style></head>
+<body><div class="wrap">
+<figure class="hero-fig"><img src="computing-hero.jpg" alt="Cutaway of the Hyperion spherical-tokamak breeder showing the plasma, blanket and coil structure — the geometry the campaign computed against" width="1920" height="1181" loading="eager">
+<figcaption><b>Hyperion breeder — computed cutaway.</b> The δ=−0.30 spherical-tokamak geometry (config-22021) that the campaign's gyrokinetics, neutronics and fast-ion runs were evaluated against. © 2026 Kronos Fusion Energy.</figcaption></figure>
+<div class="hero"><span class="kick">KRONOS FUSION ENERGY · COMPUTING &amp; DE-RISKING</span>
+<h1>We re-ran the physics ourselves.</h1>
+<p class="sub">Kronos did not take fusion on faith or on a single institution's word. Over ten months we re-derived our design from first principles — every binding gate, on the established scientific codes the field uses, on our own compute — and we publish the result so anyone can re-run it. This is how the modeling actually works.</p></div>
+
+<section class="blk"><div class="n">01 · THE CAMPAIGN</div><h2>Ten months, from first principles</h2>
+<p class="lead">From October 2025 to August 2026 we independently re-ran the <em>164 binding physics gates</em> of the design on roughly <em>69 established scientific codes</em> — no black boxes, no proprietary physics engine. <em>141</em> of those gates have their own interactive validator page, each recomputing on demand. The result: all three machines — the Hyperion breeder, and the Aegis and MetroVolt burners — close on the frozen physics.</p>
+<div class="stats">
+<div class="stat"><b>164</b><span>binding gates re-run</span></div>
+<div class="stat"><b>~69</b><span>established codes</span></div>
+<div class="stat"><b>141</b><span>interactive validators</span></div>
+<div class="stat"><b>Oct 2025<br>→ Aug 2026</b><span>campaign</span></div>
+</div></section>
+
+<section class="blk"><div class="n">02 · FIRST PRINCIPLES, NOT "AI-MODELED"</div><h2>The bright line</h2>
+<p>This distinction is load-bearing, so we state it plainly:</p>
+<div class="brightline"><p style="margin:0"><strong>The physics results come from established, community-benchmarked codes</strong> — gyrokinetics, neutronics, orbit-following, MHD, materials. <strong>The AI/ML and quantum layer sits alongside as methods</strong> — surrogates, control, prediction, acceleration — <strong>never as the source of the physics.</strong> A headline number is what CGYRO or OpenMC computed, not what a model guessed. Machine learning speeds the search and runs the control; it does not stand in for the calculation.</p></div></section>
+
+<section class="blk"><div class="n">03 · THE CODES</div><h2>A code atlas</h2>
+<p>The same tools used across the fusion program, run on our own hardware for this design. Each settled a specific binding question.</p>
+<table class="score"><thead><tr><th>Code</th><th>Physics domain</th><th>What it settled</th><th>Gate</th></tr></thead><tbody>
+<tr><td>CGYRO</td><td>Nonlinear gyrokinetic turbulence</td><td>Core turbulent transport; the negative-triangularity confinement benefit</td><td><span class="pill g">closed</span></td></tr>
+<tr><td>ASCOT5</td><td>Fast-ion / alpha orbit following</td><td>Alpha confinement and first-wall loss vs field ripple</td><td><span class="pill g">closed</span></td></tr>
+<tr><td>FreeGS</td><td>Free-boundary equilibrium</td><td>Solenoid-free equilibrium and plasma shaping (δ = −0.30)</td><td><span class="pill g">closed</span></td></tr>
+<tr><td>OpenMC</td><td>Monte-Carlo neutronics + depletion</td><td>Tritium breeding ratio, first-wall loading, activation inventory</td><td><span class="pill g">closed</span></td></tr>
+<tr><td>NIMROD</td><td>Extended-MHD</td><td>Macroscopic stability of the equilibrium</td><td><span class="pill g">closed</span></td></tr>
+<tr><td>CQL3D · GENRAY</td><td>RF current drive (Fokker-Planck + ray tracing)</td><td>Non-inductive current and bootstrap support</td><td><span class="pill g">closed</span></td></tr>
+<tr><td>TMAP8</td><td>Tritium transport</td><td>Tritium inventory and permeation through the fuel cycle</td><td><span class="pill g">closed</span></td></tr>
+<tr><td>ALARA · TALYS · NJOY</td><td>Activation &amp; nuclear data</td><td>Waste classification and processed cross-sections</td><td><span class="pill g">closed</span></td></tr>
+<tr><td>Xolotl · RustBCA</td><td>Plasma–materials interaction</td><td>First-wall erosion, gas retention, defect evolution</td><td><span class="pill g">closed</span></td></tr>
+<tr><td>Quantum-ESPRESSO + ML potentials</td><td>Materials (DFT + ML-accelerated)</td><td>Low-activation refractory alloy screening</td><td><span class="pill g">closed</span></td></tr>
+<tr><td>Mirror micro-stability (DCLC)</td><td>Kinetic stability, burner</td><td>Loss-cone / DCLC stabilization for the tandem mirror</td><td><span class="pill g">closed</span></td></tr>
+</tbody></table></section>
+
+<section class="blk"><div class="n">04 · DIMENSIONLESS &amp; GYROKINETIC</div><h2>Why we anchor in gyrokinetics</h2>
+<p class="lead">Empirical confinement scaling laws are fit to the machines that already exist — mostly conventional-aspect, positive-triangularity tokamaks. They do not transfer cleanly to a strongly-shaped, low-aspect spherical tokamak. So we don't lean on them. We anchor in <em>gyrokinetics</em>, which is dimensionless by construction — the physics depends on ρ*, ν*, β and the normalized gradients a/L<sub>T</sub>, a/L<sub>n</sub>, not on any one machine's size.</p>
+<div class="op">
+<div><b>q₉₅ ≈ 3.0</b><span>edge safety factor</span></div>
+<div><b>f<sub>Gw</sub> ≈ 0.30</b><span>Greenwald fraction</span></div>
+<div><b>β<sub>N</sub> ≤ 3.5</b><span>normalized beta</span></div>
+<div><b>δ = −0.30</b><span>triangularity (points outward)</span></div>
+</div>
+<div class="brightline"><p style="margin:0"><strong>The headline CGYRO result.</strong> On config-22021 the negative-triangularity plasma shows <strong>~40% turbulence suppression at the ion scale</strong> (real deuterium mass, μ = 3672) and <strong>~80% at the electron scale</strong> (μ = 400, the standard ETG method). The suppression is <em>robust</em> — it holds across collisionality ν* and across the spectrum k<sub>y</sub>ρ<sub>s</sub> = 0.1–6.0 — and it reproduces on independent, representative DIII-D-NT and TCV-like shape pairs, not just our own geometry. The result rests on the method and the ensemble, not on any single run.</p></div></section>
+
+<section class="blk"><div class="n">05 · AI / ML + QUANTUM METHODS</div><h2>The methods layer</h2>
+<p>Alongside the physics codes — never in place of them — sits a methods stack that makes the campaign fast, controllable and forward-looking:</p>
+<ul style="color:#c6d0dc;line-height:1.9;font-size:15px;max-width:80ch">
+<li><strong>Surrogate models</strong> — fast emulators of the expensive codes, trained on their outputs, to sweep the design space between full runs.</li>
+<li><strong>KRONOS-CTRL</strong> — the plasma control stack that holds the operating point.</li>
+<li><strong>Quench &amp; disruption prediction</strong> — <span class="mono">AUC 0.992</span> with a <span class="mono">~47 ms</span> warning window, early enough to act.</li>
+<li><strong>Quantum methods</strong> — quantum-computing approaches to fusion kinetics and materials, with resource estimates.</li>
+</ul>
+<p>All of it is documented in <a href="https://doi.org/10.5281/zenodo.22132484" style="color:var(--gold)">Companion Paper 1.5 — AI/ML &amp; Quantum Control</a>.</p></section>
+
+<section class="blk"><div class="n">06 · REPRODUCIBILITY &amp; OPENNESS</div><h2>Everything here is public and re-runnable</h2>
+<p>Every headline number regenerates from a named script and archived data under a fixed seed, and traces to a gate you can open. The record is public:</p>
+<ul class="links" style="list-style:none;padding:0">
+<li>▸ <a href="/publications/de-risking-register">The Physics De-Risking Register</a> — 164 gates · <span class="mono">doi:10.5281/zenodo.22133057</span></li>
+<li>▸ <a href="/Physics-Validation-Live_Simulation/">The 141 interactive validators</a> — recompute on demand</li>
+<li>▸ <a href="https://doi.org/10.5281/zenodo.22136279">The CGYRO dataset</a> — <span class="mono">doi:10.5281/zenodo.22136279</span></li>
+<li>▸ <a href="https://doi.org/10.5281/zenodo.22132484">Paper 1.5 — AI/ML &amp; Quantum Control</a> — <span class="mono">doi:10.5281/zenodo.22132484</span></li>
+<li>▸ <a href="/publications">The 44-paper design series</a> — the full record, each with a reproducible deposit</li>
+</ul>
+<div class="brightline" style="border-left-color:var(--blue)"><p style="margin:0;color:#c6d0dc"><strong style="color:var(--blue)">The honest gates.</strong> The Hyperion breeder is a <em>platform</em> — its success is measured in tritium and isotopes, and it makes <strong>no net-electricity claim</strong>. The Aegis / MetroVolt burner closes on-model at engineering gain <span class="mono">Q_E 1.318</span> (neutron fraction <span class="mono">f_n 5.44%</span>, P(Q_E&gt;1) = 1.0); its plug requirement is demonstrated by a named WHAM-scale experiment, not assumed. Breeder headline: <span class="mono">Q 3.076</span> at <span class="mono">85.04 MW</span>, <span class="mono">9.66 MA</span> (solenoid-free), <span class="mono">δ −0.30</span>, α-confinement <span class="mono">99.98%</span>, TBR up to <span class="mono">1.42</span>. Conceptual design and simulation study — not an operating machine.</p></div>
+<div class="btns"><a class="btn pri" href="/publications/de-risking-register">Open the register</a><a class="btn" href="/Physics-Validation-Live_Simulation/visuals.html">Interactive visuals</a><a class="btn" href="/contact">Talk to us</a></div>
+<footer>© 2026 Kronos Fusion Energy. All rights reserved. · kronosfusionenergy.com · Computational campaign Oct 2025 – Aug 2026 · canon-locked to the ratified freeze 2026-08-27 · conceptual design and simulation study.</footer>
+</section>
+</div></body></html>
