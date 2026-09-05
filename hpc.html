@@ -1,0 +1,138 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>High-performance computing — Kronos Fusion Energy</title>
+<meta name="description" content="How Kronos computes fusion: heavy physics on an in-house HPC, an open code stack, quantum methods, and permanent DOIs. Computed and published; GPU acceleration is the next phase.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="kfe-shell.css">
+<script>window.KFE_SECTION='computing';window.KFE_SUBNAV={title:'High-Performance Computing',active:'all',items:[
+ {label:'Overview',tab:'all'},{label:'Codes & hardware',tab:'codes'},{label:'Quantum',tab:'quantum'},
+ {label:'Run registry',tab:'registry'},{label:'Solvers',tab:'solvers'}]};</script>
+<script src="kfe-shell.js" defer></script>
+<style>
+:root{--bg:#232c39;--panel:#2a3441;--band:#1f2733;--line:rgba(150,165,190,.20);--gold:#d4ad5c;--blue:#5ea0c0;--ink:#e0e5eb;--mut:#8fa0b8;--green:#7bc47f;--violet:#c9a3e0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px 90px}
+a{color:var(--gold);text-decoration:none}
+.kick{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.hero{padding:40px 0 26px;border-bottom:1px solid var(--line)}
+.hero h1{font-size:clamp(28px,4.5vw,44px);line-height:1.06;margin:.2em 0 .25em}
+.hero .lede{font-size:18px;color:#cdd7e2;max-width:70ch}
+.note{font-family:'Space Mono',monospace;font-size:11.5px;color:var(--mut);margin-top:14px}
+.ctarow{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:8px;padding:10px 16px;font-size:14px;font-weight:600}
+.btn.gold{background:var(--gold);color:#1a222c}.btn.ghost{border:1px solid var(--line);color:var(--gold)}
+.btn:hover{filter:brightness(1.07)}
+section.tabsec{padding:30px 0;border-bottom:1px solid var(--line)}.tabsec[hidden]{display:none}
+h2{font-size:23px;margin:0 0 6px}.sub{color:var(--mut);font-size:14px;margin:0 0 16px;max-width:80ch}
+.hw{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:16px}
+.hwcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;border-top:3px solid var(--gold)}
+.hwcard.cpu{border-top-color:var(--blue)}.hwcard.plan{border-top-color:var(--mut)}.hwcard.render{border-top-color:var(--violet)}
+.hwcard b{display:block;font-size:15px;color:var(--ink)}.hwcard .m{font-family:'Space Mono',monospace;font-size:11.5px;color:var(--gold);margin:4px 0}
+.hwcard p{font-size:13px;color:#cdd7e2;margin:6px 0 0}
+.codes{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:8px}
+.code{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:13px 15px}
+.code b{color:var(--gold);font-size:14px}.code .t{font-size:12.5px;color:#cdd7e2}.code .h{font-family:'Space Mono',monospace;font-size:10.5px;color:var(--mut);margin-top:4px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.tools input,.tools select{background:var(--panel);border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:8px 11px;font:13px 'Space Grotesk'}
+.scrollx{overflow-x:auto;border:1px solid var(--line);border-radius:12px;margin-top:8px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:640px}
+thead th{text-align:left;padding:9px 11px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--mut);background:var(--band);border-bottom:1px solid var(--line)}
+tbody td{padding:8px 11px;border-bottom:1px solid rgba(150,165,190,.10);color:#cdd7e2}
+td.k{font-family:'Space Mono',monospace;color:var(--ink);white-space:nowrap}
+.solver{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+.spanel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;flex:1 1 300px}
+.foot{margin-top:34px;color:var(--mut);font-size:12px;line-height:1.6}
+</style></head><body>
+<div class="wrap">
+  <div class="hero">
+    <span class="kick">Kronos Fusion Energy · High-performance computing</span>
+    <h1>Computed in-house. Published with DOIs.</h1>
+    <p class="lede">Kronos runs heavy fusion physics on its own in-house HPC — an open stack of first-principles codes, quantum methods for the frontier, and a compute record anyone can reproduce. Every headline number is calculated, not assumed.</p>
+    <p class="note">Physics + CAD on the in-house Kronos HPC · exact dimensions from the CAD kernel · GPU-accelerated FEA/CFD is the deliberate next phase · no simulation is passed off as hardware.</p>
+    <div class="ctarow">
+      <a class="btn gold" href="/derisking">See the results → De-risking</a>
+      <a class="btn ghost" href="https://github.com/KronosFE" target="_blank">Public solvers (KRONOS_TOOLKIT) ↗</a>
+      <a class="btn ghost" href="/erp/derisking.html">Full compute registry — Kronos team 🔒</a>
+    </div>
+  </div>
+
+  <section class="tabsec" data-tab="all">
+    <span class="kick">Overview</span><h2>The compute behind the design</h2>
+    <p class="sub">A published compute record — the codes, the hardware, and the reproducibility. Compute cost is never shown; capability and provenance are.</p>
+    <div id="kpis"></div>
+    <div class="hw">
+      <div class="hwcard cpu"><b>The Kronos box</b><div class="m">in-house HPC · 56-thread / 768 GB</div><p>Where the canonical physics and CAD are computed — from first principles, CPU.</p></div>
+      <div class="hwcard cpu"><b>Cloud CPU (Lambda A10)</b><div class="m">fleet reruns</div><p>Large neutronics (OpenMC) fleet reruns burst to cloud CPU.</p></div>
+      <div class="hwcard plan"><b>GPU acceleration</b><div class="m">Phase 3 · planned</div><p>GPU-accelerated FEA/CFD is the next phase — planned, not yet the basis of any published number.</p></div>
+      <div class="hwcard render"><b>Cinematic renders</b><div class="m">cloud GPU · separate line</div><p>Only the 3D film renders use cloud GPU — never the physics.</p></div>
+    </div>
+  </section>
+
+  <section class="tabsec" data-tab="codes" hidden>
+    <span class="kick">Codes & hardware</span><h2>An open, first-principles stack</h2>
+    <p class="sub">External, citable codes for every physics domain — the same tools the field uses, run on our HPC and deposited with DOIs.</p>
+    <div class="codes" id="codes"></div>
+  </section>
+
+  <section class="tabsec" data-tab="quantum" hidden>
+    <span class="kick">Quantum computing</span><h2>Quantum methods, on the frontier</h2>
+    <p class="sub">Kronos explores quantum computing (Qiskit / VQE) for materials and encoded-operator problems — resource-estimated today on classical simulators, QPU-bound as the hardware matures. We report it honestly: quantum is a frontier we study, not a claim we lean on.</p>
+    <div class="hw">
+      <div class="hwcard"><b>Qiskit / VQE</b><div class="m">variational quantum eigensolver</div><p>Small materials/operator problems on quantum simulators; fault-tolerant resource estimates for what a real QPU would need.</p></div>
+      <div class="hwcard"><b>DFT bridge (Quantum ESPRESSO)</b><div class="m">first-principles materials</div><p>Classical DFT anchors the materials physics that quantum methods aim to extend.</p></div>
+      <div class="hwcard plan"><b>QPU access</b><div class="m">frontier · next phase</div><p>Real-QPU runs are a forward step; today's quantum work is resource-estimation and method development.</p></div>
+    </div>
+  </section>
+
+  <section class="tabsec" data-tab="registry" hidden>
+    <span class="kick">Run registry</span><h2>The published compute record</h2>
+    <p class="sub">Public compute runs — code, hardware class, date, and DOI. Filter by code or category. Post-freeze reruns and internal hardening are in the team data room; no cost is shown.</p>
+    <div class="tools"><input id="fr" placeholder="filter code / id / category / product…"><select id="fcat"><option value="">all categories</option></select><span class="note" id="rn"></span></div>
+    <div id="rwrap" class="scrollx"></div>
+  </section>
+
+  <section class="tabsec" data-tab="solvers" hidden>
+    <span class="kick">Solvers</span><h2>Connect &amp; run</h2>
+    <p class="sub">Lightweight solvers are public today; the heavy solvers run on our HPC. A hosted "connect &amp; run" interface is on the roadmap alongside the Phase-3 GPU build-out.</p>
+    <div class="solver">
+      <div class="spanel"><b style="color:var(--gold)">Public — run it yourself</b><p style="font-size:13px;color:#cdd7e2">Reduced-order and analytic solvers from the open KRONOS toolkit — reproduce the physics in your browser or locally.</p><a class="btn ghost" href="https://github.com/KronosFE" target="_blank" style="margin-top:8px">KRONOS_TOOLKIT ↗</a></div>
+      <div class="spanel"><b style="color:var(--blue)">Heavy solvers — in-house</b><p style="font-size:13px;color:#cdd7e2">CGYRO · OpenMC · Quantum ESPRESSO · ASCOT5 · FreeGS · SOLPS-ITER · LAMMPS — run on the Kronos HPC, deposited with DOIs.</p></div>
+      <div class="spanel"><b style="color:var(--mut)">Hosted connect — next phase</b><p style="font-size:13px;color:#cdd7e2">A hosted interface to submit heavy solves lands with the Phase-3 GPU build-out. Kronos-team access first.</p><a class="btn ghost" href="/erp/derisking.html" style="margin-top:8px">Team compute 🔒</a></div>
+    </div>
+  </section>
+
+  <div class="foot">© 2026 Kronos Fusion Energy — a fusion energy company. Public compute record shown; post-freeze reruns, internal hardening and the full registry are in the Kronos team data room. Computed from first principles on our in-house HPC; GPU acceleration is the next phase. No compute cost is shown.</div>
+</div>
+<script src="data/compute_public.js"></script><script src="_charts.js"></script>
+<script>
+var C=(window.COMPUTE||[]);
+function esc(s){return (s==null?'':(''+s)).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function fam(code){code=(code||'');var m=code.split(/[ (]/)[0];return m||'—';}
+// KPIs
+var codesN=new Set(C.map(function(r){return fam(r.code);})).size;
+document.getElementById('kpis').innerHTML=CH.kpi([
+ {v:C.length,label:'Published compute runs',cls:'green'},
+ {v:codesN,label:'Distinct codes',cls:'blue'},
+ {v:'56-thread',label:'In-house HPC',sub:'768 GB · Kronos box'},
+ {v:'Phase 3',label:'GPU acceleration',sub:'planned',cls:'violet'},
+ {v:(function(){var d={};C.forEach(function(r){if(r.doi)d[r.doi]=1;});return Object.keys(d).length||2;})(),label:'DOIs',cls:'gold'},
+ {v:'$0',label:'Compute cost shown',sub:'capability, not price'}
+]);
+// codes grid (by family, with a representative description)
+var DESC={'CGYRO':'Nonlinear gyrokinetic turbulence','OpenMC':'Monte-Carlo neutronics & TBR','Quantum':'DFT materials (Quantum ESPRESSO)','ASCOT5':'Fast-ion / alpha confinement','FreeGS':'Free-boundary equilibrium','SOLPS-ITER':'Edge / scrape-off transport','LAMMPS':'Molecular dynamics / damage','TGYRO':'Transport solver','NEO':'Neoclassical transport','TGLF':'Reduced transport','VQE':'Variational quantum eigensolver','FESTIM':'Tritium migration','KMC':'Kinetic Monte-Carlo','Graph-NN':'ML surrogate / state reconstruction','ML':'ML surrogate','KRONOS':'Reduced-order / analytic (public)','CBF':'Control-barrier safety clamp'};
+var famCount={}; C.forEach(function(r){var f=fam(r.code);famCount[f]=(famCount[f]||0)+1;});
+var order=Object.keys(famCount).sort(function(a,b){return famCount[b]-famCount[a];});
+document.getElementById('codes').innerHTML=order.map(function(f){
+ return '<div class="code"><b>'+esc(f)+'</b> <span class="h">×'+famCount[f]+'</span><div class="t">'+esc(DESC[f]||'first-principles code')+'</div><div class="h">Kronos HPC · CPU'+(f==='CGYRO'||f==='Quantum'?' · GPU-capable (Phase 3)':'')+'</div></div>';
+}).join('');
+// registry table + category filter
+var cats={}; C.forEach(function(r){cats[r.cat||'—']=1;});
+var sel=document.getElementById('fcat'); Object.keys(cats).sort().forEach(function(c){sel.innerHTML+='<option>'+esc(c)+'</option>';});
+function rows(list){return '<table><thead><tr><th>ID</th><th>Code</th><th>Hardware</th><th>Category</th><th>Date</th><th>DOI</th></tr></thead><tbody>'+
+ list.map(function(r){return '<tr><td class="k">'+esc(r.id)+'</td><td>'+esc(r.code)+'</td><td class="k">'+esc(r.hw)+'</td><td>'+esc(r.cat)+'</td><td class="k">'+esc(r.date)+'</td><td class="k">'+(r.doi?'<a href="https://doi.org/'+esc(r.doi)+'" target="_blank">'+esc(r.doi)+'</a>':'—')+'</td></tr>';}).join('')+'</tbody></table>';}
+function render(){var q=(document.getElementById('fr').value||'').toLowerCase(),c=sel.value;
+ var list=C.filter(function(r){return (!c||r.cat===c)&&(!q||JSON.stringify(r).toLowerCase().indexOf(q)>=0);});
+ document.getElementById('rwrap').innerHTML=rows(list);document.getElementById('rn').textContent=list.length+' of '+C.length+' runs';}
+document.getElementById('fr').addEventListener('input',render);sel.addEventListener('change',render);render();
+document.addEventListener('kfe:subtab',function(e){var t=e.detail;document.querySelectorAll('.tabsec').forEach(function(s){s.hidden=(s.getAttribute('data-tab')!==t);});});
+</script>
+</body></html>
