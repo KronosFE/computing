@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>High-performance computing — Kronos Fusion Energy</title>
-<meta name="description" content="How Kronos computes fusion: heavy physics on an in-house HPC, an open code stack, quantum methods, and permanent DOIs. Computed and published; GPU acceleration is the next phase.">
+<meta name="description" content="How Kronos computes fusion: heavy physics on an extensive NVIDIA GPU HPC platform (A100 / H100), an open first-principles code stack, quantum methods, and permanent DOIs. Computed and published.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="kfe-shell.css">
 <script>window.KFE_SECTION='computing';window.KFE_SUBNAV={title:'High-Performance Computing',active:'all',items:[
@@ -45,9 +45,9 @@ td.k{font-family:'Space Mono',monospace;color:var(--ink);white-space:nowrap}
 <div class="wrap">
   <div class="hero">
     <span class="kick">Kronos Fusion Energy · High-performance computing</span>
-    <h1>Computed in-house. Published with DOIs.</h1>
-    <p class="lede">Kronos runs heavy fusion physics on its own in-house HPC — an open stack of first-principles codes, quantum methods for the frontier, and a compute record anyone can reproduce. Every headline number is calculated, not assumed.</p>
-    <p class="note">Physics + CAD on the in-house Kronos HPC · exact dimensions from the CAD kernel · GPU-accelerated FEA/CFD is the deliberate next phase · no simulation is passed off as hardware.</p>
+    <h1>Computed on NVIDIA GPUs. Published with DOIs.</h1>
+    <p class="lede">Kronos runs heavy fusion physics on an extensive NVIDIA GPU HPC platform — an open stack of first-principles codes, quantum methods for the frontier, and a compute record anyone can reproduce. Every headline number is calculated, not assumed.</p>
+    <p class="note">Heavy physics on an NVIDIA GPU HPC platform (A100 / H100) · reduced-order, analytic and CAD work on an in-house HPC node · exact dimensions from the CAD kernel · no simulation is passed off as hardware.</p>
     <div class="ctarow">
       <a class="btn gold" href="/derisking">See the results → De-risking</a>
       <a class="btn ghost" href="https://github.com/KronosFE" target="_blank">Public solvers (KRONOS_TOOLKIT) ↗</a>
@@ -60,10 +60,10 @@ td.k{font-family:'Space Mono',monospace;color:var(--ink);white-space:nowrap}
     <p class="sub">A published compute record — the codes, the hardware, and the reproducibility. Compute cost is never shown; capability and provenance are.</p>
     <div id="kpis"></div>
     <div class="hw">
-      <div class="hwcard cpu"><b>The Kronos box</b><div class="m">in-house HPC · 56-thread / 768 GB</div><p>Where the canonical physics and CAD are computed — from first principles, CPU.</p></div>
-      <div class="hwcard cpu"><b>Cloud CPU (Lambda A10)</b><div class="m">fleet reruns</div><p>Large neutronics (OpenMC) fleet reruns burst to cloud CPU.</p></div>
-      <div class="hwcard plan"><b>GPU acceleration</b><div class="m">Phase 3 · planned</div><p>GPU-accelerated FEA/CFD is the next phase — planned, not yet the basis of any published number.</p></div>
-      <div class="hwcard render"><b>Cinematic renders</b><div class="m">cloud GPU · separate line</div><p>Only the 3D film renders use cloud GPU — never the physics.</p></div>
+      <div class="hwcard plan"><b>NVIDIA GPU HPC platform</b><div class="m">A100 · H100 · extensive</div><p>Where the heavy physics runs — CGYRO turbulence, OpenMC neutronics, DFT/materials and the Phase-3 FEA/CFD — on an extensive NVIDIA GPU fleet.</p></div>
+      <div class="hwcard cpu"><b>In-house HPC node</b><div class="m">56-thread / 768 GB</div><p>Reduced-order and analytic physics plus the CAD / blueprint build, computed from first principles.</p></div>
+      <div class="hwcard"><b>GPU-accelerated solvers</b><div class="m">FEA · CFD · MC transport</div><p>Phase-3 structural, thermal-hydraulic and Monte-Carlo neutronics run GPU-accelerated at fabrication fidelity.</p></div>
+      <div class="hwcard render"><b>Cinematic renders</b><div class="m">GPU · separate line</div><p>The 3D film renders run on GPU on a line kept separate from the physics.</p></div>
     </div>
   </section>
 
@@ -92,15 +92,15 @@ td.k{font-family:'Space Mono',monospace;color:var(--ink);white-space:nowrap}
 
   <section class="tabsec" data-tab="solvers" hidden>
     <span class="kick">Solvers</span><h2>Connect &amp; run</h2>
-    <p class="sub">Lightweight solvers are public today; the heavy solvers run on our HPC. A hosted "connect &amp; run" interface is on the roadmap alongside the Phase-3 GPU build-out.</p>
+    <p class="sub">Lightweight solvers are public today; the heavy solvers run on our NVIDIA GPU HPC platform. A hosted "connect &amp; run" interface is on the roadmap.</p>
     <div class="solver">
       <div class="spanel"><b style="color:var(--gold)">Public — run it yourself</b><p style="font-size:13px;color:#cdd7e2">Reduced-order and analytic solvers from the open KRONOS toolkit — reproduce the physics in your browser or locally.</p><a class="btn ghost" href="https://github.com/KronosFE" target="_blank" style="margin-top:8px">KRONOS_TOOLKIT ↗</a></div>
-      <div class="spanel"><b style="color:var(--blue)">Heavy solvers — in-house</b><p style="font-size:13px;color:#cdd7e2">CGYRO · OpenMC · Quantum ESPRESSO · ASCOT5 · FreeGS · SOLPS-ITER · LAMMPS — run on the Kronos HPC, deposited with DOIs.</p></div>
-      <div class="spanel"><b style="color:var(--mut)">Hosted connect — next phase</b><p style="font-size:13px;color:#cdd7e2">A hosted interface to submit heavy solves lands with the Phase-3 GPU build-out. Kronos-team access first.</p><a class="btn ghost" href="/erp/derisking.html" style="margin-top:8px">Team compute 🔒</a></div>
+      <div class="spanel"><b style="color:var(--blue)">Heavy solvers — NVIDIA GPU HPC</b><p style="font-size:13px;color:#cdd7e2">CGYRO · OpenMC · Quantum ESPRESSO · ASCOT5 · FreeGS · SOLPS-ITER · LAMMPS — run on the NVIDIA GPU HPC platform, deposited with DOIs.</p></div>
+      <div class="spanel"><b style="color:var(--mut)">Hosted connect — next phase</b><p style="font-size:13px;color:#cdd7e2">A hosted interface to submit heavy solves is on the roadmap. Kronos-team access first.</p><a class="btn ghost" href="/erp/derisking.html" style="margin-top:8px">Team compute 🔒</a></div>
     </div>
   </section>
 
-  <div class="foot">© 2026 Kronos Fusion Energy — a fusion energy company. Public compute record shown; post-freeze reruns, internal hardening and the full registry are in the Kronos team data room. Computed from first principles on our in-house HPC; GPU acceleration is the next phase. No compute cost is shown.</div>
+  <div class="foot">© 2026 Kronos Fusion Energy — a fusion energy company. Public compute record shown; post-freeze reruns, internal hardening and the full registry are in the Kronos team data room. Computed from first principles on an NVIDIA GPU HPC platform, with an in-house HPC node for reduced-order and CAD work. No compute cost is shown.</div>
 </div>
 <script src="data/compute_public.js"></script><script src="_charts.js"></script>
 <script>
@@ -112,8 +112,8 @@ var codesN=new Set(C.map(function(r){return fam(r.code);})).size;
 document.getElementById('kpis').innerHTML=CH.kpi([
  {v:C.length,label:'Published compute runs',cls:'green'},
  {v:codesN,label:'Distinct codes',cls:'blue'},
- {v:'56-thread',label:'In-house HPC',sub:'768 GB · Kronos box'},
- {v:'Phase 3',label:'GPU acceleration',sub:'planned',cls:'violet'},
+ {v:'A100·H100',label:'NVIDIA GPU HPC',sub:'physics platform',cls:'violet'},
+ {v:'56-thread',label:'In-house HPC node',sub:'768 GB · reduced-order + CAD'},
  {v:(function(){var d={};C.forEach(function(r){if(r.doi)d[r.doi]=1;});return Object.keys(d).length||2;})(),label:'DOIs',cls:'gold'},
  {v:'$0',label:'Compute cost shown',sub:'capability, not price'}
 ]);
@@ -122,7 +122,7 @@ var DESC={'CGYRO':'Nonlinear gyrokinetic turbulence','OpenMC':'Monte-Carlo neutr
 var famCount={}; C.forEach(function(r){var f=fam(r.code);famCount[f]=(famCount[f]||0)+1;});
 var order=Object.keys(famCount).sort(function(a,b){return famCount[b]-famCount[a];});
 document.getElementById('codes').innerHTML=order.map(function(f){
- return '<div class="code"><b>'+esc(f)+'</b> <span class="h">×'+famCount[f]+'</span><div class="t">'+esc(DESC[f]||'first-principles code')+'</div><div class="h">Kronos HPC · CPU'+(f==='CGYRO'||f==='Quantum'?' · GPU-capable (Phase 3)':'')+'</div></div>';
+ return '<div class="code"><b>'+esc(f)+'</b> <span class="h">×'+famCount[f]+'</span><div class="t">'+esc(DESC[f]||'first-principles code')+'</div><div class="h">NVIDIA GPU HPC'+(f==='Quantum'?' · QPU-bound (frontier)':'')+'</div></div>';
 }).join('');
 // registry table + category filter
 var cats={}; C.forEach(function(r){cats[r.cat||'—']=1;});
